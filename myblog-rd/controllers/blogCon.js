@@ -1,5 +1,17 @@
 const blogModel = require("../models/blogModel")
+const { formatTime } = require("../utils/dateTimeUtil")
 
+function exchange(item) {
+    for (let i = 0; i < item.length; i++) {
+        item[i].post_time = formatTime(item[i].post_time, 'yy-MM-dd hh:mm:ss')
+    }
+}
+
+function comm_exchange(item) {
+    for (let i = 0; i < item.length; i++) {
+        item[i].comm_post_time = formatTime(item[i].comm_post_time, 'yy-MM-dd hh:mm:ss')
+    }
+}
 
 module.exports = {
     blogList: async (ctx, next) => {
@@ -45,6 +57,7 @@ module.exports = {
         let { blog_id } = ctx.query;
         let results = await blogModel.getComment(blog_id);
         console.log(results);
+        comm_exchange(results, 'yy-MM-dd hh:mm:ss')
         if (results.length > 0) {
             ctx.body = {
                 state: "success",
@@ -60,7 +73,7 @@ module.exports = {
         let { blog_id } = ctx.query;
         console.log(blog_id);
         let results = await blogModel.getBlogById(blog_id);
-    console.log(results);
+        exchange(results, 'yy-MM-dd hh:mm:ss');
         if (results.length > 0) {
             ctx.body = {
                 state: "success",

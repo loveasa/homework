@@ -6,11 +6,11 @@ router.prefix("/blog");
 
 router.get("/list", verifyToken, blogCon.blogList);
 
-router.get("/detail",  verifyToken,blogCon.getBlogDetail);
+router.get("/detail", blogCon.getBlogDetail);
 
 router.post("/post", verifyToken, blogCon.postBlog);
 
-router.get("/comment", verifyToken, blogCon.commentList);
+router.get("/comment", blogCon.commentList);
 
 router.post("/postComment", verifyToken,blogCon.postComment);
 
